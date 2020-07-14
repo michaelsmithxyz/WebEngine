@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebEngine", "WebEngine\WebEngine.fsproj", "{6463FE2A-3B80-4D11-8E06-3821A6678205}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebEngine.Tests", "WebEngine.Tests\WebEngine.Tests.fsproj", "{61C0BF42-2F81-4D75-B947-97751AB369FE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6463FE2A-3B80-4D11-8E06-3821A6678205}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6463FE2A-3B80-4D11-8E06-3821A6678205}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6463FE2A-3B80-4D11-8E06-3821A6678205}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6463FE2A-3B80-4D11-8E06-3821A6678205}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61C0BF42-2F81-4D75-B947-97751AB369FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61C0BF42-2F81-4D75-B947-97751AB369FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61C0BF42-2F81-4D75-B947-97751AB369FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61C0BF42-2F81-4D75-B947-97751AB369FE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

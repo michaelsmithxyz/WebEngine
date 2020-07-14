@@ -1,0 +1,6 @@
+.idea/
+WebEngine/bin/
+WebEngine/obj/
+WebEngine.Tests/bin/
+WebEngine.Tests/obj/
+*.user

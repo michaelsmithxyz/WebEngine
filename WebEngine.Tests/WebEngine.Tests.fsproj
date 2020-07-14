@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+
+        <IsPackable>false</IsPackable>
+        <GenerateProgramFile>false</GenerateProgramFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FsUnit" Version="3.9.0" />
+        <PackageReference Include="nunit" Version="3.12.0" />
+        <PackageReference Include="NUnit3TestAdapter" Version="4.0.0-alpha.1" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Include="Utilities\Helpers.fs" />
+        <Compile Include="Utilities\Constraints.fs" />
+        <Compile Include="Parse\HtmlParsingTests.fs" />
+        <Compile Include="Program.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\WebEngine\WebEngine.fsproj" />
+    </ItemGroup>
+
+</Project>
