@@ -23,3 +23,13 @@ let pSubclassSelector: Parser<SubclassSelector, unit> =
         pIdSelector
         pClassSelector
     ]
+    
+let pCompoundSelector: Parser<CompoundSelector, unit> =
+    let pMaybeEmptyCompoundSelector = parse {let! typeSelector = opt pTypeSelector
+                                             let! subclassSelectors = many pSubclassSelector
+                                             return typeSelector, subclassSelectors}
+    notEmpty pMaybeEmptyCompoundSelector
+    |>> fun (t, s) ->
+            { TypeSelector = t
+              SubclassSelectors = s }
+    

@@ -43,3 +43,36 @@ let private testParseSubclassSelectorCases =
 let ``test that we can parse subclass selectors`` (input: string) (expected: SubclassSelector) =
     let parsed = run pSubclassSelector input
     parsed |> should be (parsedAs expected)
+    
+    
+let testParseCompoundSelectorCases =
+    [
+        "html", { TypeSelector = Some(Element("html")); SubclassSelectors = [] }
+        "#id", { TypeSelector = None; SubclassSelectors = [ Id("id") ] }
+        ".class", { TypeSelector = None; SubclassSelectors = [ Class("class") ] }
+        
+        ("div.class",
+         { TypeSelector = Some(Element("div"))
+           SubclassSelectors = [ Class("class") ] })
+        ("div#id",
+         { TypeSelector = Some(Element("div"))
+           SubclassSelectors = [ Id("id") ] })
+        ("div.class-one.class-two",
+         { TypeSelector = Some(Element("div"))
+           SubclassSelectors = [ Class("class-one"); Class("class-two") ] })
+        ("div.class#id",
+         { TypeSelector = Some(Element("div"))
+           SubclassSelectors = [ Class("class"); Id("id") ] })
+        
+        (".class#id",
+         { TypeSelector = None
+           SubclassSelectors = [ Class("class"); Id("id") ] })
+        (".class-one.class-two",
+         { TypeSelector = None
+           SubclassSelectors = [ Class("class-one"); Class("class-two") ] })
+    ] |> toTestCases2
+    
+[<Test; TestCaseSource("testParseCompoundSelectorCases")>]
+let ``test that we can parse compound selectors`` (input: string) (expected: CompoundSelector) =
+    let parsed = run pCompoundSelector input
+    parsed |> should be (parsedAs expected)
