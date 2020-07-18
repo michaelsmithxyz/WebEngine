@@ -6,7 +6,9 @@
 
     <ItemGroup>
         <Compile Include="Data\Html.fs" />
+        <Compile Include="Data\Css.fs" />
         <Compile Include="Parse\Html.fs" />
+        <Compile Include="Parse\Css.fs" />
     </ItemGroup>
 
     <ItemGroup>

@@ -20,7 +20,7 @@ let private testParseAttributeCases =
     ] |> toTestCases2
 
 [<Test; TestCaseSource("testParseAttributeCases")>]
-let ``test that we can parse individual attributes``(input: string, expected: Attribute) =
+let ``test that we can parse individual attributes`` (input: string, expected: Attribute) =
     let parsed = run pAttribute input
     parsed |> should be (parsedAs expected)
      
@@ -36,7 +36,7 @@ let private testParseAttributesCases =
     ] |> toTestCases2
 
 [<Test; TestCaseSource("testParseAttributesCases")>]
-let ``test that we can parse collections of attributes``(input: string, expected: Attribute list) =
+let ``test that we can parse collections of attributes`` (input: string, expected: Attribute list) =
     let parsed = run pAttributes input
     parsed |> should be (parsedAs expected)
 
@@ -61,7 +61,7 @@ let private testParseTagCases =
     ] |> toTestCases4
     
 [<Test; TestCaseSource("testParseTagCases")>]
-let ``test that we can parse individual tags``(input: string, tagType: TagType, name: string, expected: Tag) =
+let ``test that we can parse individual tags`` (input: string, tagType: TagType, name: string, expected: Tag) =
     let parsed = run (pTagOfType tagType name) input
     parsed |> should be (parsedAs expected)
         

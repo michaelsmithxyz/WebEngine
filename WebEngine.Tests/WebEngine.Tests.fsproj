@@ -18,6 +18,7 @@
         <Compile Include="Utilities\Helpers.fs" />
         <Compile Include="Utilities\Constraints.fs" />
         <Compile Include="Parse\HtmlParsingTests.fs" />
+        <Compile Include="Parse\CssParsingTests.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>
 
