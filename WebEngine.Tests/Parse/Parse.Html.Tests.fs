@@ -1,4 +1,4 @@
-module WebEngine.Tests.Parse.HtmlParsingTests
+module WebEngine.Tests.Parse.Html.Tests
 
 open NUnit.Framework
 open FsUnit

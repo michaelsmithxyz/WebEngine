@@ -1,4 +1,4 @@
-module WebEngine.Tests.Parse.CssParsingTests
+module WebEngine.Tests.Parse.Css.Tests
 
 open FParsec
 open NUnit.Framework
