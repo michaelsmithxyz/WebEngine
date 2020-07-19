@@ -4,3 +4,5 @@ WebEngine/obj/
 WebEngine.Tests/bin/
 WebEngine.Tests/obj/
 *.user
+.fake
+.ionide

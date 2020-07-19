@@ -57,14 +57,6 @@ let pCombinator: Parser<Combinator, unit> =
 
 let private pComplexSelectorImpl, private pComplexSelectorRef =
     createParserForwardedToRef<ComplexSelector, unit>()
-    
-
-let (<!>) (p: Parser<_,_>) label : Parser<_,_> =
-    fun stream ->
-        printfn "%A: Entering %s" stream.Position label
-        let reply = p stream
-        printfn "%A: Leaving %s (%A)" stream.Position label reply.Status
-        reply
 
 do pComplexSelectorRef :=
     (* pTail is a tiny bit subtle due to the fact that the space character is
