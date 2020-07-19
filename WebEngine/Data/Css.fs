@@ -29,7 +29,9 @@ type Combinator =
     | Child
 
 /// A type representing a CSS "complex" selector, which consists of one or
-/// more compound selectors joined by combinators
+/// more compound selectors joined by combinators. This type is defined
+/// recursively in a similar way to a linked list, with each link
+/// associated with a combinator
 type ComplexSelector =
     | Compound of CompoundSelector
     | Combined of CompoundSelector * Combinator * ComplexSelector

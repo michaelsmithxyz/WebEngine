@@ -70,9 +70,139 @@ let testParseCompoundSelectorCases =
         (".class-one.class-two",
          { TypeSelector = None
            SubclassSelectors = [ Class("class-one"); Class("class-two") ] })
+        
+        ("div ,",
+         { TypeSelector = Some(Element("div"))
+           SubclassSelectors = [] })
     ] |> toTestCases2
     
 [<Test; TestCaseSource("testParseCompoundSelectorCases")>]
 let ``test that we can parse compound selectors`` (input: string) (expected: CompoundSelector) =
     let parsed = run pCompoundSelector input
+    parsed |> should be (parsedAs expected)
+
+
+let private testParseCombinatorCases =
+    [
+        " ", Descendant
+        "  ", Descendant
+        
+        ">", Child
+        " >", Child
+        "> ", Child
+        " > ", Child
+    ] |> toTestCases2
+    
+[<Test; TestCaseSource("testParseCombinatorCases")>]
+let ``test that we can parse combinators`` (input: string) (expected: Combinator) =
+    let parsed = run pCombinator input
+    parsed |> should be (parsedAs expected)
+
+
+let private testParseComplexCases =
+    [
+        ("div.class",
+         Compound({ TypeSelector = Some(Element("div"))
+                    SubclassSelectors = [ Class("class") ] }))
+        
+        ("div.class span#id",
+         Combined({ TypeSelector = Some(Element("div"))
+                    SubclassSelectors = [ Class("class") ] },
+                   Descendant,
+                   Compound({ TypeSelector = Some(Element("span"))
+                              SubclassSelectors = [ Id("id") ] })))
+        
+        ("html > body",
+         Combined({ TypeSelector = Some(Element("html"))
+                    SubclassSelectors = [] },
+                   Child,
+                   Compound({ TypeSelector = Some(Element("body"))
+                              SubclassSelectors = [] })))
+        ("html>body",
+         Combined({ TypeSelector = Some(Element("html"))
+                    SubclassSelectors = [] },
+                   Child,
+                   Compound({ TypeSelector = Some(Element("body"))
+                              SubclassSelectors = [] })))
+        
+        ("div ,",
+         Compound({ TypeSelector = Some(Element("div"))
+                    SubclassSelectors = [] }))
+    ] |> toTestCases2
+    
+[<Test; TestCaseSource("testParseComplexCases")>]
+let ``test that we can parse complex selectors`` (input: string) (expected: ComplexSelector) =
+    let parsed = run pComplexSelector input
+    parsed |> should be (parsedAs expected)
+
+
+let private testParseSelectorListCases =
+    [
+        ("div",
+         [
+             Compound({ TypeSelector = Some(Element("div"))
+                        SubclassSelectors = [] })
+         ])
+        ("div, span",
+         [
+             Compound({ TypeSelector = Some(Element("div"))
+                        SubclassSelectors = [] })
+             Compound({ TypeSelector = Some(Element("span"))
+                        SubclassSelectors = [] })
+         ])
+        ("div , span",
+         [
+             Compound({ TypeSelector = Some(Element("div"))
+                        SubclassSelectors = [] })
+             Compound({ TypeSelector = Some(Element("span"))
+                        SubclassSelectors = [] })
+         ])
+        ("div ,span",
+         [
+             Compound({ TypeSelector = Some(Element("div"))
+                        SubclassSelectors = [] })
+             Compound({ TypeSelector = Some(Element("span"))
+                        SubclassSelectors = [] })
+         ])
+        ("div, span > a",
+         [
+             Compound({ TypeSelector = Some(Element("div"))
+                        SubclassSelectors = [] })
+             Combined({ TypeSelector = Some(Element("span"))
+                        SubclassSelectors = [] },
+                     Child,
+                     Compound({ TypeSelector = Some(Element("a"))
+                                SubclassSelectors = [] }))
+         ])
+        ("html > body, span > a",
+         [
+             Combined({ TypeSelector = Some(Element("html"))
+                        SubclassSelectors = [] },
+                     Child,
+                     Compound({ TypeSelector = Some(Element("body"))
+                                SubclassSelectors = [] }))
+             Combined({ TypeSelector = Some(Element("span"))
+                        SubclassSelectors = [] },
+                     Child,
+                     Compound({ TypeSelector = Some(Element("a"))
+                                SubclassSelectors = [] }))
+         ])
+        ("html > body.container, span > a#id",
+         [
+             Combined({ TypeSelector = Some(Element("html"))
+                        SubclassSelectors = [] },
+                     Child,
+                     Compound({ TypeSelector = Some(Element("body"))
+                                SubclassSelectors = [ Class("container") ] }))
+             Combined({ TypeSelector = Some(Element("span"))
+                        SubclassSelectors = [] },
+                     Child,
+                     Compound({ TypeSelector = Some(Element("a"))
+                                SubclassSelectors = [ Id("id") ] }))
+         ])
+    ] |> toTestCases2
+    
+[<Test; TestCaseSource("testParseSelectorListCases")>]
+let ``test that we can parse selector lists`` (input: string) (expected: SelectorList) =
+    let parsed = run pSelectorList input
     parsed |> should be (parsedAs expected)

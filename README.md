@@ -9,7 +9,7 @@ of features to add in order to track the state of this repository as I work on
 this in my spare time:
 
 - [X] Minimal HTML parsing support
-- [ ] Minimal CSS selector parsing support **(in progress)**
+- [X] Minimal CSS selector parsing support
 - [ ] Minimal CSS stylesheet parsing support
 - [ ] Style application to DOM nodes
 - [ ] Box-model tree construction
