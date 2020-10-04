@@ -1,5 +1,8 @@
 module WebEngine.Data.Css
 
+
+(* Selectors *)
+
 /// A type representing a CSS "type" selector, which matches either all
 /// elements with the given element name, or the universal selector '*',
 /// which matches all elements
@@ -39,3 +42,30 @@ type ComplexSelector =
 /// A type representing a CSS selector list, which consists of one or more
 /// complex selectors
 type SelectorList = ComplexSelector list
+
+
+(* Stylesheets *)
+
+/// A type representing a CSS property (color, font-family, etc.)
+type Property = string
+
+/// A type representing a CSS property value
+type Value = string
+
+/// A type representing a CSS property declaration
+type Declaration = {
+    Property: Property
+    Value: Value
+}
+
+/// A type representing a CSS style rule, which is a rule which applies property
+/// values to selectors. This is essentially a CSS "block".
+type StyleRule = {
+    Selector: SelectorList
+    Declarations: Declaration list
+}
+
+/// A type representing a complete CSS stylesheet
+type Stylesheet = {
+    Rules: StyleRule list
+}

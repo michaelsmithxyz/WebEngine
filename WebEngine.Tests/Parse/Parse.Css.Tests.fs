@@ -143,6 +143,11 @@ let private testParseSelectorListCases =
              Compound({ TypeSelector = Some(Element("div"))
                         SubclassSelectors = [] })
          ])
+        ("div ",
+         [
+             Compound({ TypeSelector = Some(Element("div"))
+                        SubclassSelectors = [] })
+         ])
         ("div, span",
          [
              Compound({ TypeSelector = Some(Element("div"))
@@ -205,4 +210,67 @@ let private testParseSelectorListCases =
 [<Test; TestCaseSource("testParseSelectorListCases")>]
 let ``test that we can parse selector lists`` (input: string) (expected: SelectorList) =
     let parsed = run pSelectorList input
+    parsed |> should be (parsedAs expected)
+
+
+let testParsePropertyCases =
+    [
+        ("color", "color")
+        ("color:", "color")
+        ("background-color", "background-color")
+        ("background-color:", "background-color")
+        ("-webkit-experimental-property", "-webkit-experimental-property")
+    ] |> toTestCases2
+
+[<Test; TestCaseSource("testParsePropertyCases")>]
+let ``test that we can parse properties`` (input: string) (expected: Property) =
+    let parsed = run pProperty input
+    parsed |> should be (parsedAs expected)
+
+
+let testParseValueCases =
+    [
+        ("red", "red")
+        ("blue;", "blue")
+        ("10px 10px", "10px 10px")
+        ("1px solid red;", "1px solid red")
+        ("#FFFFFF", "#FFFFFF")
+        ("rgba(1.0, 1.0, 1.0, 1.0);", "rgba(1.0, 1.0, 1.0, 1.0)")
+    ] |> toTestCases2
+
+[<Test; TestCaseSource("testParseValueCases")>]
+let ``test that we can parse values`` (input: string) (expected: Value) =
+    let parsed = run pValue input
+    parsed |> should be (parsedAs expected)
+
+
+let testParseDeclarationCases =
+    [
+        ("color: red;", { Property = "color"; Value = "red" })
+        ("background-color:   #fff;   ", { Property = "background-color"; Value = "#fff" })
+        ("-webkit-border-radius: 12px;", { Property = "-webkit-border-radius"; Value = "12px" })
+    ] |> toTestCases2
+
+[<Test; TestCaseSource("testParseDeclarationCases")>]
+let ``test that we can parse declarations`` (input: string) (expected: Declaration) =
+    let parsed = run pDeclaration input
+    parsed |> should be (parsedAs expected)
+
+
+let testParseStyleRuleCases =
+    [
+        ("p {
+             color: red;
+         }",
+         {
+             Selector = [Compound({ TypeSelector = Some(Element("p"))
+                                    SubclassSelectors = [] })]
+             Declarations = [{ Property = "color"; Value = "red" }]
+         })
+        (* TODO - more test cases here *)
+    ] |> toTestCases2
+
+[<Test; TestCaseSource("testParseStyleRuleCases")>]
+let ``test that we can parse style rules`` (input: string) (expected: StyleRule) =
+    let parsed = run pStyleRule input
     parsed |> should be (parsedAs expected)

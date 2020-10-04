@@ -10,7 +10,7 @@ this in my spare time:
 
 - [X] Minimal HTML parsing support
 - [X] Minimal CSS selector parsing support
-- [ ] Minimal CSS stylesheet parsing support
+- [-] Minimal CSS stylesheet parsing support
 - [ ] Style application to DOM nodes
 - [ ] Box-model tree construction
 - [ ] Layout construction
